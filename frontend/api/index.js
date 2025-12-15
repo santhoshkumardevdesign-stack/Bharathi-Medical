@@ -11,12 +11,26 @@ let db = null;
 function getDb() {
   if (!db) {
     if (admin.apps.length === 0) {
-      const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+      const projectId = process.env.FIREBASE_PROJECT_ID;
+      const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+      const privateKeyRaw = process.env.FIREBASE_PRIVATE_KEY;
+
+      if (!projectId || !clientEmail || !privateKeyRaw) {
+        throw new Error(`Missing Firebase config: projectId=${!!projectId}, clientEmail=${!!clientEmail}, privateKey=${!!privateKeyRaw}`);
+      }
+
+      // Handle private key - may be JSON encoded or direct
+      let privateKey = privateKeyRaw;
+      if (privateKeyRaw.startsWith('"')) {
+        privateKey = JSON.parse(privateKeyRaw);
+      }
+      privateKey = privateKey.replace(/\\n/g, '\n');
+
       admin.initializeApp({
         credential: admin.credential.cert({
-          projectId: process.env.FIREBASE_PROJECT_ID,
-          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-          privateKey: privateKey
+          projectId,
+          clientEmail,
+          privateKey
         })
       });
     }
@@ -97,6 +111,17 @@ function cors(res) {
 // Health Check
 async function handleHealth(req, res) {
   res.json({ status: 'ok', message: 'Bharathi Medicals API running!', timestamp: new Date().toISOString() });
+}
+
+// Debug endpoint to check config
+async function handleDebug(req, res) {
+  res.json({
+    hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
+    hasClientEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
+    hasPrivateKey: !!process.env.FIREBASE_PRIVATE_KEY,
+    privateKeyLength: process.env.FIREBASE_PRIVATE_KEY?.length || 0,
+    privateKeyStart: process.env.FIREBASE_PRIVATE_KEY?.substring(0, 50) || 'none'
+  });
 }
 
 // Auth Login
@@ -429,6 +454,7 @@ export default async function handler(req, res) {
 
     // Route matching
     if (path === '/health' || path === '/') return handleHealth(req, res);
+    if (path === '/debug') return handleDebug(req, res);
     if (path === '/auth/login') return handleAuthLogin(req, res);
     if (path === '/auth/me') return handleAuthMe(req, res);
     if (path === '/customer/register') return handleCustomerRegister(req, res);
