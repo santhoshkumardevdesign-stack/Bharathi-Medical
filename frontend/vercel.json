@@ -1,0 +1,35 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://api.bharathimedicals.in/api/:path*" }
+  ],
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/shop",
+      "permanent": false,
+      "has": [{ "type": "host", "value": "shop.bharathimedicals.in" }]
+    },
+    {
+      "source": "/",
+      "destination": "/pos",
+      "permanent": false,
+      "has": [{ "type": "host", "value": "pos.bharathimedicals.in" }]
+    },
+    {
+      "source": "/",
+      "destination": "/login",
+      "permanent": false,
+      "has": [{ "type": "host", "value": "admin.bharathimedicals.in" }]
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+      ]
+    }
+  ]
+}
