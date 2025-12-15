@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api" },
+    { "source": "/api/:path*", "destination": "/api/index" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "redirects": [
@@ -42,7 +42,7 @@
     }
   ],
   "functions": {
-    "api/**/*.js": {
+    "api/**/*.cjs": {
       "maxDuration": 30
     }
   }
