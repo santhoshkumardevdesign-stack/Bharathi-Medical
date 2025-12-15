@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run seed:*)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(cmd /c \"taskkill /F /PID 38892\")",
+      "Bash(cmd /c \"for /f \"\"tokens=5\"\" %a in (''netstat -aon ^| findstr :5000'') do taskkill /F /PID %a\")",
+      "Bash(cmd /c \"taskkill /F /PID 19420\")",
+      "Bash(powershell -Command \"Stop-Process -Id 19420 -Force\")",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Complete Bharathi Medicals Vet & Pet Shop Application\n\nMulti-branch inventory management system with:\n- Customer App (/shop) - Browse products, cart, checkout with Razorpay\n- Shop Keeper POS (/pos) - In-store sales, held sales\n- Admin Portal (/login) - Dashboard, inventory, reports, suppliers\n\nFeatures:\n- React + Vite + Tailwind CSS frontend\n- Node.js + Express + SQLite backend\n- Razorpay payment integration (GPay, Paytm, UPI, Cards)\n- PDF/Excel export for reports\n- Supabase schema for production deployment\n- Custom domain configuration (shop/pos/admin subdomains)\n- Multi-branch stock management with batch tracking\n\n🐾 Named after Tamil poet Subramania Bharathi\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(ren \"firebase-service-account.json.json\" \"firebase-service-account.json\")",
+      "Bash(npm run seed:firestore:*)",
+      "Bash(del \"c:\\Users\\SanthoshKumarShakkar\\Desktop\\Medical-Claude\\frontend\\api\\index.js\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Add Vercel Serverless Functions for full-stack deployment\n\n- Create Vercel API routes in frontend/api folder\n- Add Firebase Firestore database layer for serverless functions\n- Implement auth, products, customers, sales, dashboard APIs\n- Configure vercel.json for API routing\n- Add backend dependencies (firebase-admin, bcryptjs, jsonwebtoken)\n- Update backend with Firestore support and seed script\n- Enable deployment entirely on Vercel (no separate backend hosting needed)\n\nThis allows the app to be deployed 100% on Vercel:\n- Frontend: Vite React app\n- Backend: Vercel Serverless Functions\n- Database: Firebase Firestore\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}
