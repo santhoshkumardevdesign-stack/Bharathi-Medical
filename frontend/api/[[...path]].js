@@ -423,7 +423,9 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
-    const path = '/' + (req.query.path?.join('/') || '');
+    // Extract path from URL - remove /api prefix and query string
+    const urlPath = req.url?.split('?')[0] || '/';
+    const path = urlPath.replace(/^\/api/, '') || '/';
 
     // Route matching
     if (path === '/health' || path === '/') return handleHealth(req, res);
