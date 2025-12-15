@@ -1,9 +1,9 @@
 // Unified API Handler for Vercel Serverless
 // Handles all API routes in a single function to stay within the 12 function limit
 
-const admin = require('firebase-admin');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import admin from 'firebase-admin';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 // ==================== FIREBASE INITIALIZATION ====================
 let db = null;
@@ -418,7 +418,7 @@ async function handleOnlineOrders(req, res) {
 }
 
 // ==================== MAIN HANDLER ====================
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   cors(res);
   if (req.method === 'OPTIONS') return res.status(200).end();
 
