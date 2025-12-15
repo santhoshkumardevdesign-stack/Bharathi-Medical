@@ -19,12 +19,17 @@ function getDb() {
         throw new Error(`Missing Firebase config: projectId=${!!projectId}, clientEmail=${!!clientEmail}, privateKey=${!!privateKeyRaw}`);
       }
 
-      // Handle private key - may be JSON encoded or direct
+      // Handle private key - may be JSON encoded, base64 only, or full PEM
       let privateKey = privateKeyRaw;
       if (privateKeyRaw.startsWith('"')) {
         privateKey = JSON.parse(privateKeyRaw);
       }
       privateKey = privateKey.replace(/\\n/g, '\n');
+
+      // If key doesn't have PEM header, wrap it
+      if (!privateKey.includes('-----BEGIN')) {
+        privateKey = `-----BEGIN PRIVATE KEY-----\n${privateKey}\n-----END PRIVATE KEY-----\n`;
+      }
 
       admin.initializeApp({
         credential: admin.credential.cert({
