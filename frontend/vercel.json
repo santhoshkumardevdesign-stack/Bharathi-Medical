@@ -1,6 +1,21 @@
 {
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://api.bharathimedicals.in/api/:path*" }
+    { "source": "/api/auth/login", "destination": "/api/auth/login" },
+    { "source": "/api/auth/me", "destination": "/api/auth/me" },
+    { "source": "/api/customer/login", "destination": "/api/customer/login" },
+    { "source": "/api/customer/register", "destination": "/api/customer/register" },
+    { "source": "/api/customer/profile", "destination": "/api/customer/profile" },
+    { "source": "/api/products", "destination": "/api/products/index" },
+    { "source": "/api/products/categories", "destination": "/api/products/categories" },
+    { "source": "/api/branches", "destination": "/api/branches/index" },
+    { "source": "/api/stock", "destination": "/api/stock/index" },
+    { "source": "/api/sales", "destination": "/api/sales/index" },
+    { "source": "/api/dashboard", "destination": "/api/dashboard/index" },
+    { "source": "/api/customers", "destination": "/api/customers/index" },
+    { "source": "/api/suppliers", "destination": "/api/suppliers/index" },
+    { "source": "/api/online/orders", "destination": "/api/online/orders" },
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "redirects": [
     {
@@ -24,6 +39,14 @@
   ],
   "headers": [
     {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
@@ -31,5 +54,11 @@
         { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 30
+    }
+  }
 }

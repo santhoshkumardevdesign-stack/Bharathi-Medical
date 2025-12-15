@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { initializeDatabase } from './config/database.js';
-// Server configured
+import { initializeDb } from './config/db.js';
+
+// Load environment variables first
+dotenv.config();
 
 // Import routes
 import authRoutes from './routes/auth.js';
@@ -20,8 +22,6 @@ import customerAuthRoutes from './routes/customerAuth.js';
 import exportRoutes from './routes/exports.js';
 import paymentRoutes from './routes/payments.js';
 
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -30,8 +30,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Initialize database
-initializeDatabase();
+// Initialize database (supports both SQLite and Firestore)
+initializeDb().then(({ type }) => {
+  console.log(`Database type: ${type}`);
+}).catch(err => {
+  console.error('Database initialization error:', err);
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
